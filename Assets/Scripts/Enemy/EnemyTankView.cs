@@ -28,7 +28,8 @@ public class EnemyTankView : MonoBehaviour
     void FixedUpdate()
     {
         Vector3 playerPos = TankService.GetInstance().GetPlayerPos();
-        tankController.EnemyMove(tankRigidbody,playerPos);
+        if (Vector3.Distance(transform.position, playerPos) > 4f)
+            tankController.EnemyMove(tankRigidbody,playerPos);
         if (Vector3.Distance(transform.position, playerPos) < 10f)
         {
             timeElapsed += Time.deltaTime;

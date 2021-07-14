@@ -1,17 +1,17 @@
 ﻿using UnityEngine.UI;
 using UnityEngine;
+using System;
 
-public class EnemyTankView : MonoBehaviour
+public class EnemyTankView : MonoBehaviour,IDamageable
 {
     public EnemyTankController tankController;
     public Rigidbody tankRigidbody;
     private float timeElapsed;
     [SerializeField]private float bulletFireCounter = 1f;
-    private float BulletForce = 1000f;
     [SerializeField] Image HealthBar;
     public Transform bulletFirePos;
-    public GameObject bulletPrefab;
-   
+    public BulletView bulletPrefab;
+    [SerializeField] BulletScriptableObjectList bulletSOL;
 
     void Awake()
     {
@@ -21,14 +21,15 @@ public class EnemyTankView : MonoBehaviour
     
     void Start()
     {
-        Debug.Log("Tank View created");
+        Debug.Log("Enemy Tank created");
         
     }
 
     void FixedUpdate()
     {
         Vector3 playerPos = TankService.GetInstance().GetPlayerPos();
-        tankController.EnemyMove(tankRigidbody,playerPos);
+        if (Vector3.Distance(transform.position, playerPos) > 8f)
+            tankController.EnemyMove(tankRigidbody,playerPos);
         if (Vector3.Distance(transform.position, playerPos) < 10f)
         {
             timeElapsed += Time.deltaTime;
@@ -41,22 +42,20 @@ public class EnemyTankView : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter(Collision other)
+    private void FireBullet(Transform bulletFirePos, BulletView bulletPrefab)
     {
-        if (other.gameObject.transform.parent.GetComponent<TankView>() != null)
-        {
-            Debug.Log("Bullet Fired by " + other.gameObject.transform.parent.name);
-            Destroy(other.gameObject);
-            tankController.TankHit();
-        }
+        int selectBulletType = UnityEngine.Random.Range(0, bulletSOL.Bullets.Length);
+        BulletService.GetInstance().CreateBullet(bulletPrefab, bulletSOL.Bullets[selectBulletType],gameObject);
+        BulletService.GetInstance().FireBullet(bulletFirePos);
     }
 
-    public void FireBullet(Transform bulletFirePos, GameObject bulletPrefab)
+    private void OnCollisionEnter(Collision other)
     {
-        GameObject bullet = Instantiate(bulletPrefab, bulletFirePos.position, bulletFirePos.rotation);
-        bullet.transform.parent = transform;
-        bullet.GetComponent<Rigidbody>().AddForce(bulletFirePos.forward * BulletForce);
-        Destroy(bullet, 2f);
+        if (other.gameObject.GetComponent<TankView>() != null)
+        {
+            Debug.Log("Collided with " + other.gameObject.name);
+            //tankController.TakeDamage(tankController.TankModel.Damage);
+        }
     }
 
     public void EnemyDie()
@@ -78,5 +77,21 @@ public class EnemyTankView : MonoBehaviour
         {
             HealthBar.color = Color.green;
         }
+    }
+
+    public void TakeDamage(float damage)
+    {
+        tankController.TakeDamage(damage);
+    }
+
+    public void DestroyView()
+    {
+        Destroy(gameObject);
+        tankController = null;
+        tankRigidbody = null;
+        HealthBar = null;
+        bulletFirePos = null;
+        bulletPrefab = null;
+        bulletSOL = null;
     }
 }

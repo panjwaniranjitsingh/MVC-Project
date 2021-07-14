@@ -704,7 +704,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2028759835}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -26.3, y: 6.2, z: 22.34}
+  m_LocalPosition: {x: -26.3, y: 2, z: 22.34}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -741,7 +741,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tankView: {fileID: 7102593775563646166, guid: a82f4c77be6da524ca984f13bcee3883,
     type: 3}
-  enemyTankView: {fileID: 6950721680187941426, guid: 508a28fa405660f46b8bb6381221f90f,
+  enemyTankView: {fileID: 7594034567561413999, guid: 508a28fa405660f46b8bb6381221f90f,
     type: 3}
   enemySpawnPos: {fileID: 2028759836}
   cinemachineVcam: {fileID: 93539351}

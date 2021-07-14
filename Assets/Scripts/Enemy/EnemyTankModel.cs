@@ -7,6 +7,12 @@ public class EnemyTankModel
         Health = health;
     }
 
-    public int Speed { get; }
-    public float Health { get; }
+    public int Speed { get; set; }
+    public float Health { get; set; }
+
+    public void DestroyModel()
+    {
+        Speed = 0;
+        Health = 0;
+    }
 }

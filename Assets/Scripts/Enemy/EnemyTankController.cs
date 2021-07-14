@@ -3,7 +3,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class EnemyTankController
+public class EnemyTankController 
 {
     public float currentHealth;
 
@@ -17,11 +17,9 @@ public class EnemyTankController
         TankView.transform.position = spawnPos.position;
         //Debug.Log("tank view created", TankView);
     }
-
     
-
-    public EnemyTankModel TankModel { get; }
-    public EnemyTankView TankView { get; }
+    public EnemyTankModel TankModel { get; set; }
+    public EnemyTankView TankView { get; set; }
 
     public void EnemyMove(Rigidbody tankRigidbody,Vector3 nextPos)
     {
@@ -42,22 +40,31 @@ public class EnemyTankController
         }
     }
 
-    public void TankHit()
-    {
-        currentHealth -= 25;
-        TankView.ChangeHealthBarColor();
-        if (currentHealth < 0)
-        {
-            //Enemy Dies
-            TankView.EnemyDie();
-        }
-    }
-
-    public IEnumerator EnableTankView()
+   /* public IEnumerator EnableTankView()
     {
         yield return new WaitForSeconds(5f);
         TankView.gameObject.SetActive(true);
         currentHealth = TankModel.Health;
         TankView.ChangeHealthBarColor();
+    }*/
+
+    public void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+        TankView.ChangeHealthBarColor();
+        if (currentHealth < 0)
+        {
+            //Enemy Dies
+            TankView.EnemyDie();
+            EnemyTankService.GetInstance().DestroyTank(this);
+        }
+    }
+
+    public void DestroyController()
+    {
+        TankModel.DestroyModel();
+        TankView.DestroyView();
+        TankModel = null;
+        TankView = null;
     }
 }

@@ -440,7 +440,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6529784091916704561}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.579, z: 1.004}
+  m_LocalPosition: {x: 0, y: 1.579, z: 1.726}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7817888993409182315}
@@ -570,12 +570,13 @@ MonoBehaviour:
   tankRigidbody: {fileID: 0}
   horizontal: 0
   vertical: 0
-  HealthBar: {fileID: 0}
+  HealthBar: {fileID: 85028028859904725}
   bulletFirePos: {fileID: 1479142882245508432}
-  bulletPrefab: {fileID: 6677999722421533883, guid: 8afe0db3a4cc3b5469a77c777d85f20c,
+  bulletPrefab: {fileID: -7917200713012634623, guid: 8afe0db3a4cc3b5469a77c777d85f20c,
     type: 3}
   NameText: {fileID: 3054031750015630617}
   HealthText: {fileID: 7673516971615903596}
+  bulletSOL: {fileID: 11400000, guid: 9f8460b71dca8ed4ba120a0f43f70e5f, type: 2}
 --- !u!1001 &7817888993408790683
 PrefabInstance:
   m_ObjectHideFlags: 0

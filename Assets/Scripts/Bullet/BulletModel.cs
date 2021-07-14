@@ -1,18 +1,24 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿
+using System;
 
-public class BulletModel : MonoBehaviour
+public class BulletModel 
 {
-    // Start is called before the first frame update
-    void Start()
+
+    public BulletModel(BulletScriptableObject bulletSO)
     {
-        
+        BulletName = bulletSO.BulletName;
+        BulletForce = bulletSO.BulletForce;
+        Damage = bulletSO.Damage;
     }
 
-    // Update is called once per frame
-    void Update()
+    public string BulletName { get; set; }
+    public float BulletForce { get; set; }
+    public float Damage { get; set; }
+
+    internal void Destroy()
     {
-        
+        BulletName = "";
+        BulletForce = 0;
+        Damage = 0;
     }
 }

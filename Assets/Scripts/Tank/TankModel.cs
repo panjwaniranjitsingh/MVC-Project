@@ -1,4 +1,5 @@
 ﻿
+using System;
 using UnityEngine;
 
 public class TankModel
@@ -12,9 +13,18 @@ public class TankModel
         TankColor = playerTSO.TankColor;
     }
 
-    public string Name { get; }
-    public float Speed { get; }
-    public float Health { get; }
-    public float Damage { get; }
-    public Color TankColor { get; }
+    public string Name { get; set; }
+    public float Speed { get; set; }
+    public float Health { get; set; }
+    public float Damage { get; set; }
+    public Color TankColor { get; set; }
+
+    internal void Destroy()
+    {
+        Name = null;
+        Speed = 0;
+        Health = 0;
+        Damage = 0;
+        TankColor = Color.black;
+    }
 }

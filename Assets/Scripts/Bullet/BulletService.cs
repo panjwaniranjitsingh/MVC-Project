@@ -1,9 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
+using System;
 using UnityEngine;
 
-public class BulletService : MonoBehaviour
+public class BulletService : MonoSingletonGeneric<BulletService>
 {
+    
+    private BulletController bulletController;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,5 +17,23 @@ public class BulletService : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public BulletController CreateBullet(BulletView bulletView,BulletScriptableObject bulletSO,GameObject parent)
+    {
+        BulletModel bulletModel = new BulletModel(bulletSO);
+        bulletController = new BulletController(bulletModel,bulletView,parent);
+        return bulletController;
+    }
+
+    public void FireBullet(Transform bulletFirePos)
+    {
+        bulletController.FireBullet(bulletFirePos);
+    }
+
+    internal void DestroyBulletMVC(BulletController bulletController)
+    {
+        bulletController.Destroy();
+        bulletController = null;
     }
 }

@@ -1,16 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class TankService : MonoSingletonGeneric<TankService>
 {
-    TankController tankController;
-    
+    private TankController tankController;
 
     public TankController CreateNewTank(TankView tankView, TankScriptableObject playerTSO)
     {
-        TankModel model = new TankModel(playerTSO);
-        tankController = new TankController(model, tankView);
+        TankModel tankModel = new TankModel(playerTSO);
+        tankController = new TankController(tankModel, tankView);
         return tankController;
     }
 
@@ -19,4 +16,9 @@ public class TankService : MonoSingletonGeneric<TankService>
         return tankController.TankView.transform.position;
     }
 
+    internal void DestroyTankMVC(TankController tankController)
+    {
+        tankController.Destroy();
+        tankController = null;
+    }
 }

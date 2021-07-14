@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class TankController
 {
@@ -15,12 +14,11 @@ public class TankController
         currentHealth = TankModel.Health;
         TankView = GameObject.Instantiate<TankView>(tankPrefab);
         TankView.tankController = this;
-
         //Debug.Log("tank view created", TankView);
     }
 
-    public TankModel TankModel { get; }
-    public TankView TankView { get; }
+    public TankModel TankModel { get; set; }
+    public TankView TankView { get; set; }
 
     public void PlayerMovement(float horizontal, float vertical)
     {
@@ -34,14 +32,23 @@ public class TankController
         TankView.tankRigidbody.MoveRotation(TankView.tankRigidbody.rotation * turnRotation);
     }
 
-    public void TankHit()
+    public void TakeDamage(float damage)
     {
-        currentHealth -= 25;
+        currentHealth -= damage;
         TankView.ChangeHealthBarColor();
         if (currentHealth < 0)
         {
             //Enemy Dies
             TankView.PlayerDie();
+            TankService.GetInstance().DestroyTankMVC(this);
         }
+    }
+
+    internal void Destroy()
+    {
+        TankModel.Destroy();
+        TankView.Destroy();
+        TankModel = null;
+        TankView = null;
     }
 }

@@ -1,18 +1,26 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BulletView : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public BulletController bulletController;
+
+    private void OnCollisionEnter(Collision collision)
     {
-        
+        gameObject.SetActive(false);
+        //GameObject bulletEffect = Instantiate(BulletExplosion, transform.position, transform.rotation);
+        //Destroy(bulletEffect, 1f);
+        IDamageable damageable = collision.gameObject.GetComponent<IDamageable>();
+        //Debug.Log("Damageable=" + damageable);
+        if (damageable != null)
+        {
+            damageable.TakeDamage(bulletController.GetDamage());
+        }
+        bulletController.DestroyBullet();
     }
 
-    // Update is called once per frame
-    void Update()
+    internal void Destroy()
     {
-        
+        bulletController = null;
+        Destroy(gameObject);
     }
 }
